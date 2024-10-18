@@ -1,4 +1,5 @@
-from homeassistant.helpers.typing import ConfigType, HomeAssistantType, ServiceCallType
+from homeassistant.helpers.typing import ConfigType
+from homeassistant.core import HomeAssistant, ServiceCall
 import voluptuous as vol
 
 DOMAIN = "custom_event"
@@ -11,8 +12,8 @@ CALL_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup(hass: HomeAssistantType, config: ConfigType):
-    async def handle_fire(call: ServiceCallType):
+async def async_setup(hass: HomeAssistant, config: ConfigType):
+    async def handle_fire(call: ServiceCall):
         event_type = call.data.get("event_type")
         event_data = call.data.get("event_data")
         hass.bus.async_fire(event_type, event_data)
